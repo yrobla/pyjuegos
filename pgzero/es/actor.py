@@ -24,32 +24,28 @@ ES_ANCHORS = {
 
 
 # These are methods (of the same name) on pygame.Rect
-ES_SYMBOLIC_POSITIONS = set((
+SYMBOLIC_POSITIONS = set((
     "arribaizquierda", "abajoizquierda", "arribaderecha",
     "abajoderecha", "medioarriba", "medioizquierda",
     "medioabajo", "medioderecha", "centro",
 ))
 
-class Actor(actor.Actor):
-    EXPECTED_INIT_KWARGS = ES_SYMBOLIC_POSITIONS
+POS_TOPLEFT = None
+ANCHOR_CENTER = None
 
-    def _init_position(self, pos, anchor, **kwargs):
-        if anchor is None:
-            anchor = ("center", "center")
-        self.anchor = anchor
+class Personaje(actor.Actor):
+    EXPECTED_INIT_KWARGS = SYMBOLIC_POSITIONS
 
-        symbolic_pos_args = {
-            k: kwargs[k] for k in kwargs if k in ES_SYMBOLIC_POSITIONS}
+    def __init__(self, image, pos=POS_TOPLEFT, anchor=ANCHOR_CENTER, **kwargs):
+        if 'alto' in kwargs:
+            kwargs['height'] = kwargs['alto']
+            kwargs['alto'] = None
 
-        if not pos and not symbolic_pos_args:
-            # No positional information given, use sensible top-left default
-            self.topleft = (0, 0)
-        elif pos and symbolic_pos_args:
-            raise TypeError("'pos' argument cannot be mixed with 'topleft', 'topright' etc. argument.")
-        elif pos:
-            self.pos = pos
-        else:
-            self._set_symbolic_pos(symbolic_pos_args)
+        if 'ancho' in kwargs:
+            kwargs['width'] = kwargs['ancho']
+            kwargs['ancho'] = None
+
+        super(Personaje, self).__init__(image, pos=pos, anchor=anchor, kwargs=kwargs)
 
     @property
     def ancla(self):
@@ -75,5 +71,109 @@ class Actor(actor.Actor):
     def imagen(self, image):
         self.image(image)
 
+    @property
+    def alto(self):
+        return self.height
+
+    @alto.setter
+    def alto(self, height):
+        self.height = height
+
+    @property
+    def ancho(self):
+        return self.width
+
+    @ancho.setter
+    def ancho(self, width):
+        self.width = width
+
+    @property
+    def izquierda(self):
+        return self.left
+
+    @izquierda.setter
+    def izquierda(self, left):
+        self.left = left
+
+    @property
+    def derecha(self):
+        return self.right
+
+    @derecha.setter
+    def derecha(self, right):
+        self.right = right
+
+    @property
+    def arribaizquierda(self):
+        return self.topleft
+
+    @arribaizquierda.setter
+    def arribaizquierda(self, topleft):
+        self.topleft = topleft
+
+    @property
+    def abajoizquierda(self):
+        return self.bottomleft
+
+    @abajoizquierda.setter
+    def abajoizquierda(self, bottomleft):
+        self.bottomleft = bottomleft
+
+    @property
+    def arribaderecha(self):
+        return self.topright
+
+    @arribaderecha.setter
+    def arribaderecha(self, topright):
+        self.topright = topright
+
+    @property
+    def abajoderecha(self):
+        return self.bottomright
+
+    @abajoderecha.setter
+    def abajoderecha(self, bottomright):
+        self.bottomright = bottomright
+
+    @property
+    def medioarriba(self):
+        return self.midtop
+
+    @medioarriba.setter
+    def medioarriba(self, midtop):
+        self.midtop = midtop
+
+    @property
+    def medioizquierda(self):
+        return self.midleft
+
+    @medioizquierda.setter
+    def medioizquierda(self, midleft):
+        self.midleft = midleft
+
+    @property
+    def medioabajo(self):
+        return self.midbottom
+
+    @medioabajo.setter
+    def medioabajo(self, midbottom):
+        self.midbottom = midbottom
+
+    @property
+    def medioderecha(self):
+        return self.midright
+
+    @medioderecha.setter
+    def medioderecha(self, midright):
+        self.midright = midright
+
+    @property
+    def centro(self):
+        return self.center
+
+    @centro.setter
+    def centro(self, center):
+        self.center = center
+
     def dibuja(self):
-        self.draw()
+        game.pantalla.blit(self._surf, self.arribaizquierda)
