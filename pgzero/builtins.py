@@ -12,5 +12,6 @@ from .es.animacion import animar
 from .rect import Rect, ZRect
 
 from .constants import mouse, keys, keymods
+from .es.constantes import teclas
 
 from .game import exit

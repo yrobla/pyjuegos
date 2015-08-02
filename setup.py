@@ -18,7 +18,7 @@ setup(
     author='Daniel Pope',
     author_email='mauve@mauveweb.co.uk',
     url='http://pypi.python.org/pypi/pgzero',
-    packages=['pgzero'],
+    packages=['pgzero', 'pgzero.es'],
     entry_points={
         'console_scripts': [
             'pgzrun = pgzero.runner:main'

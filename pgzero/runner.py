@@ -8,7 +8,7 @@ import warnings
 from optparse import OptionParser
 from types import ModuleType
 
-from .game import PGZeroGame, DISPLAY_FLAGS
+from .game import PGZeroGame, Juego, DISPLAY_FLAGS
 from . import loaders
 from . import builtins
 
@@ -55,22 +55,25 @@ def _substitute_full_framework_python():
     os.execv(framework_python, ['python', '-m', 'pgzero'] + sys.argv[1:])
 
 
-def main():
+def main(module=None):
 
     # Pygame won't run from a normal virtualenv copy of Python on a Mac
     if not _check_python_ok_for_pygame():
         _substitute_full_framework_python()
 
-    parser = OptionParser()
-    options, args = parser.parse_args()
+    if not module:
+        parser = OptionParser()
+        options, args = parser.parse_args()
 
-    if len(args) != 1:
-        parser.error("You must specify which module to run.")
+        if len(args) != 1:
+            parser.error("You must specify which module to run.")
 
-    if __debug__:
-        warnings.simplefilter('default', DeprecationWarning)
+        if __debug__:
+            warnings.simplefilter('default', DeprecationWarning)
 
-    path = args[0]
+        path = args[0]
+    else:
+        path = module
     with open(path) as f:
         src = f.read()
 
@@ -86,4 +89,4 @@ def main():
     mod.__dict__.update(builtins.__dict__)
     sys.modules[name] = mod
     exec(code, mod.__dict__)
-    PGZeroGame(mod).run()
+    Juego(mod).run()
