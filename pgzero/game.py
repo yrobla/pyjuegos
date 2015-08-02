@@ -290,11 +290,6 @@ class Juego(PGZeroGame):
         constants.MUSIC_END: 'cuando_acaba_musica'
     }
 
-    EVENT_PARAM_MAPPERS = {
-        'raton': constants.mouse,
-        'tecla': constants.keys
-    }
-
     def run(self):
         clock = pygame.time.Clock()
         self.reinit_screen()
