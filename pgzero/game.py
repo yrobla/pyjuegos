@@ -334,3 +334,44 @@ class Juego(PGZeroGame):
 
     def jugar(self):
         self.run()
+
+    def get_update_func(self):
+        """Get a one-argument update function.
+
+        If the module defines a function matching ::
+
+            update(dt)
+
+        or ::
+
+            update()
+
+        then this will be called. Otherwise return a no-op function.
+
+        """
+        try:
+            refresca = self.mod.refresca
+        except AttributeError:
+            return None
+        else:
+            if refresca.__code__.co_argcount == 0:
+                return lambda dt: refresca()
+            return refresca
+
+    def get_draw_func(self):
+        """Get a draw function.
+
+        If no draw function is define, raise an exception.
+
+        """
+        try:
+            dibuja = self.mod.dibuja
+        except AttributeError:
+            return lambda: None
+        else:
+            if dibuja.__code__.co_argcount != 0:
+                raise TypeError(
+                    "draw() must not take any arguments."
+                )
+            return dibuja
+

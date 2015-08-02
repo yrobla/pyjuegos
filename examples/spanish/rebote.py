@@ -22,12 +22,12 @@ class Pelota:
 pelota = Pelota(50, 100)
 
 
-def draw():
+def dibuja():
     pantalla.borra()
     pelota.dibuja()
 
 
-def update(dt):
+def refresca(dt):
     # Apply constant acceleration formulae
     uy = pelota.vy
     pelota.vy += GRAVEDAD * dt
