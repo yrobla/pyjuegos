@@ -175,19 +175,7 @@ class SoundLoader(ResourceLoader):
             except Exception:
                 pass
             else:
-                raise UnsupportedFormat("""
-'{0}' is not in a supported audio format.
-
-It appears to be:
-
-    {1}
-
-Pygame supports only uncompressed WAV files (PCM or ADPCM) and compressed
-Ogg Vorbis files. Try re-encoding the sound file, for example using Audacity:
-
-    http://audacityteam.org/
-""".format(path, fmt).strip()) from None
-            raise
+                raise UnsupportedFormat("Formato no soportado")
 
 
 class FontLoader(ResourceLoader):

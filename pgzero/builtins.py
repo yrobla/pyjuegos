@@ -5,6 +5,7 @@ from . import music
 from .es import musica
 from .actor import Actor
 from .es.actor import Personaje
+from .es.sonido import Sonido
 from .keyboard import keyboard
 from .es.teclado import teclado
 from .animation import animate

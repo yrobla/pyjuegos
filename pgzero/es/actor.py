@@ -69,7 +69,12 @@ class Personaje(actor.Actor):
 
     @imagen.setter
     def imagen(self, image):
-        self.image(image)
+        self._image_name = image
+        p = self.pos
+        self._surf = loaders.images.load(image)
+        self.width, self.height = self._surf.get_size()
+        self._calc_anchor()
+        self.pos = p
 
     @property
     def alto(self):
@@ -177,3 +182,6 @@ class Personaje(actor.Actor):
 
     def dibuja(self):
         game.pantalla.blit(self._surf, self.arribaizquierda)
+
+    def coincide(self, pos):
+        return self.collidepoint(pos)

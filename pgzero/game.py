@@ -5,6 +5,7 @@ import time
 import pygame
 import pgzero.clock
 import pgzero.keyboard
+import pgzero.loaders
 import pgzero.screen
 import pgzero.es.pantalla
 
@@ -13,6 +14,7 @@ from . import constants
 
 screen = None
 pantalla = None
+sonidos = None
 DISPLAY_FLAGS = 0
 
 
